@@ -12,6 +12,37 @@ def get_node(node_id):
     return Node.node_index[node_id]
 
 
+classes = {
+    "Lambda",
+    "If",
+    "Else",
+    "ElseIf",
+    "Then",
+    "Branch",
+    "Condition",
+    "Binary",
+    "Unary",
+    "FunctionCall",
+    "Literal",
+    "LoopExpression",
+    "Init",
+    "PreCondition",
+    "PostCondition",
+    "Body",
+    "Returns",
+    "OldValue",
+    "Reduction",
+    "ArrayAccess",
+    "BuiltInFunctionCall",
+    "Let",
+    "RangeGen",
+    "Range",
+    "Scatter",
+    "ArrayInit",
+    "RecordInit",
+    "RecordAccess"
+}
+
 class Node:
 
     node_index = {}
@@ -80,7 +111,7 @@ class Node:
     def parse_port(port, in_port):
         return Port(
             Node.get_node(port["node_id"]),
-            get_type(port["type"]),  # chooses an appropriate class
+            port["type"],  # chooses an appropriate class
             port["index"],
             port["label"] if "label" in port else None,
             in_port
@@ -120,7 +151,6 @@ class Node:
 
                 from_type = "in" if dst_node.is_parent(src_node) else "out"
                 to_type = "out" if src_node.is_parent(dst_node) else "in"
-
                 from_ = src_node.__dict__[from_type + "_ports"][src_index]
                 to = dst_node.__dict__[to_type + "_ports"][dst_index]
 
@@ -191,8 +221,8 @@ class Node:
 
         for field, value in data.items():
             if isinstance(value, dict):
-                if "name" in value and value["name"] in self.class_map:
-                    self.__dict__[field] = self.class_map[value["name"]](value)
+                if "name" in value and value["name"] in classes:
+                    self.__dict__[field] = Node(value)
             elif field in ["value", "operator", "function_name",
                            "callee", "field", "pragmas", "pragma_group", "port_to_name_index"]:
                 self.__dict__[field] = value
