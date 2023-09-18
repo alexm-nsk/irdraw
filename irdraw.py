@@ -58,21 +58,26 @@ def draw_compl_node(dwg, area, node: Node):
             edge = Edge.edge_to[o_p.id]
             nodes, _, _ = edge.from_.node.trace_back()
             o_p.num_nodes = len(nodes)
+            o_p.output_node = edge.from_.node
 
     # consider two cases : we have nodes, and hence no special isolated num_subnodes
     # or we only have special isolated node types like "Then" or "Else"
     special = not ("nodes" in node.__dict__)
     # case #1
-    total_nodes = sum([o_p.num_nodes for o_p in node.out_ports])
-    left = 0
-    for o_p in node.out_ports:
-        o_p.portion = o_p.num_nodes / total_nodes
-        vert_offset = consts.FUNC_MARGIN + consts.PORT_HEIGHT
-        width = area["width"] - consts.FUNC_MARGIN * 2
-        sub_area = dict(left = left + consts.FUNC_MARGIN,
-                    top = area["top"] + ,
-                    width = sub_width,
-                    height = area["height"] - vert_offset)
+    if not special:
+        total_nodes = sum([o_p.num_nodes for o_p in node.out_ports])
+        left = area["left"]
+        for o_p in node.out_ports:
+            o_p.portion = o_p.num_nodes / total_nodes
+            vert_offset = consts.FUNC_MARGIN * 2 + consts.PORT_HEIGHT
+            sub_width = o_p.portion*area["width"] - consts.FUNC_MARGIN * 2
+            sub_area = dict(left = left + consts.FUNC_MARGIN,
+                        top = area["top"] + vert_offset,
+                        width = sub_width,
+                        height = area["height"] - vert_offset*2)
+            left += sub_width
+            #print(sub_area)
+            draw_compl_node(dwg, sub_area, o_p.output_node)
 
 
 def ir_render_to_svg(functions: list, area: dict, name: str) -> str:

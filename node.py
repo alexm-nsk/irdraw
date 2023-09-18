@@ -310,7 +310,7 @@ class Node:
         )
         for i, i_p in enumerate(self.in_ports):
             i_p.pos_x = left + i * port_width + area["left"] + consts.FUNC_MARGIN
-            i_p.pos_y = consts.FUNC_MARGIN + consts.PORT_MARGIN
+            i_p.pos_y = consts.FUNC_MARGIN + consts.PORT_MARGIN + area["top"]
             i_p.width = port_width
 
         num_outs = len(self.out_ports)
@@ -322,6 +322,6 @@ class Node:
         for i, o_p in enumerate(self.out_ports):
             o_p.pos_x = left + i * port_width + area["left"] + consts.FUNC_MARGIN
             o_p.pos_y = (
-                area["height"] - o_p.height - consts.FUNC_MARGIN - consts.PORT_MARGIN
+                area["height"] + area["top"] - o_p.height - consts.FUNC_MARGIN - consts.PORT_MARGIN
             )
             o_p.width = port_width
