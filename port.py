@@ -40,10 +40,13 @@ class Port:
             size=(self.width, self.height),
             rx=consts.FUNC_ROUND,
             ry=consts.FUNC_ROUND,
-            fill="#bbbbbb",
+            fill=consts.INPORT_FILL if self.in_port else consts.OUTPORT_FILL,
             stroke="#111111"))
         dwg.add(
-            dwg.text(text=self.label, insert=(self.pos_x + self.width/2, self.pos_y + consts.PORT_MARGIN), fill="black")
+            dwg.text(text=self.label if self.label else "output",
+                     insert=(self.pos_x + self.width/2,
+                             self.pos_y + consts.PORT_MARGIN + consts.FONT_HEIGHT),
+                     fill="black")
         )
 
 

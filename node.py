@@ -249,6 +249,14 @@ class Node:
     def __init__(self, data):
         self.read_data(data)
 
+    @property
+    def atomic(self):
+        return not (
+            "nodes" in self.__dict__
+            and self.nodes
+            and any([field in self.__dict__ for field in Node.subnodes_fields])
+        )
+
     def trace_back(self):
         """Finds all chains nodes leading to this node's inputs.
         Returns the Nodes and all involved Edges.
@@ -295,7 +303,9 @@ class Node:
     def place(self, area: dict):
         num_ins = len(self.in_ports)
         port_width = 0.8 * area["width"] / (num_ins)
-        left = area["width"] / 2 - (((port_width + consts.PORT_MARGIN * 2 ) * num_ins) / 2)
+        left = area["width"] / 2 - (
+            ((port_width + consts.PORT_MARGIN * 2) * num_ins) / 2
+        )
         for i, i_p in enumerate(self.in_ports):
             i_p.pos_x = left + i * port_width + area["left"] + consts.FUNC_MARGIN
             i_p.pos_y = consts.FUNC_MARGIN + consts.PORT_MARGIN
@@ -303,10 +313,13 @@ class Node:
 
         num_outs = len(self.out_ports)
         port_width = 0.8 * area["width"] / (num_outs)
-        left = area["width"] / 2 - (((port_width + consts.PORT_MARGIN * 2 ) * num_outs) / 2)
+        left = area["width"] / 2 - (
+            ((port_width + consts.PORT_MARGIN * 2) * num_outs) / 2
+        )
 
         for i, o_p in enumerate(self.out_ports):
             o_p.pos_x = left + i * port_width + area["left"] + consts.FUNC_MARGIN
-            o_p.pos_y = area["height"] - o_p.height - consts.FUNC_MARGIN -\
-                        consts.PORT_MARGIN
+            o_p.pos_y = (
+                area["height"] - o_p.height - consts.FUNC_MARGIN - consts.PORT_MARGIN
+            )
             o_p.width = port_width

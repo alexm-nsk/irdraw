@@ -2,6 +2,7 @@ import svgwrite
 import json
 from node import Node
 import consts
+from edge import Edge
 
 def python_names(obj, fields=False):
     """Converts camelCase to snake_case in a dictionary
@@ -51,14 +52,11 @@ def draw_node(dwg, area, node: Node):
     for i_p in node.in_ports:
         i_p.draw(dwg)
 
-
     for o_p in node.out_ports:
         o_p.draw(dwg)
-
-
-    for n in node.nodes:
-        #draw_node
-        pass
+        edge = Edge.edge_to[o_p.id]
+        nodes, _, _ = edge.from_.node.trace_back()
+        o_p.num_nodes = len(nodes)
 
 
 def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
@@ -90,16 +88,16 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
 
 
 if __name__ == "__main__":
-    print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
+    #print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
     area = dict(width=1280, height=600)
 
     input_file_name = "ir.json"
 
-    print(f"Reading IR file {input_file_name}.")
+    #print(f"Reading IR file {input_file_name}.")
     with open(input_file_name, "r") as file_:
         data = python_names(json.load(file_))
 
     functions = [Node(func) for func in data["functions"]]
     file_name = "../test.svg"
-    print(f"Drawing.")
+    #print(f"Drawing.")
     ir_render_to_svg(functions, area, file_name)
