@@ -63,3 +63,4 @@ if __name__ == "__main__":
 
     functions = [Node(func) for func in data["functions"]]
     ir_render_to_svg(functions, area)
+    print(functions[0].num_subnodes())
