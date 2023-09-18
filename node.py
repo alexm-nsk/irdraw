@@ -270,6 +270,16 @@ class Node:
 
         return nodes, internal_edges, input_edges
 
+    subnodes_fields = ["nodes", "branches", "body", "init", "condition", "range_gen", "returns"]
+
+    def num_subnodes(self):
+        num_subnodes = 0
+        for s_n in self.subnodes_fields:
+            if s_n in self.__dict__:
+                for subnode in self.__dict__[s_n]:
+                    num_subnodes += 1 + subnode.num_subnodes()
+        return num_subnodes
+
     # drawing section:
     pos_x: float
     pos_y: float

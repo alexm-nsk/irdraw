@@ -35,16 +35,24 @@ def get_piped_input():
     return input_text
 
 
+FUNC_FILL = "#cbcbcb"
+FUNC_STROKE = "#0b0b0b"
+
+
 def ir_render_to_svg(functions: list, area: dict) -> str:
     """converts an ir as python dict to an svg string"""
     image_width = area["width"]
     image_height = area["height"]
 
     dwg = svgwrite.Drawing("../test.svg", size=(image_width, image_height))
-    dwg.add(dwg.line((0, 0), (10, 0), stroke=svgwrite.rgb(10, 10, 16, "%")))
-    dwg.add(dwg.text("Test", insert=(0, 5), fill="red"))
+    rect = svgwrite.shapes.Rect(
+        insert=(10, 10), size=(790, 590), rx=3, ry=3, fill=FUNC_FILL, stroke=FUNC_STROKE
+    )
+    dwg.add(rect)
+
+    # dwg.add(dwg.line((0, 0), (10, 0), stroke=svgwrite.rgb(10, 10, 16, "%")))
+    # dwg.add(dwg.text("Test", insert=(0, 5), fill="red"))
     dwg.save()
-    pass
 
 
 if __name__ == "__main__":
