@@ -250,12 +250,14 @@ class Node:
         self.read_data(data)
 
     @property
-    def atomic(self):
-        return not (
-            "nodes" in self.__dict__
-            and self.nodes
-            and any([field in self.__dict__ for field in Node.subnodes_fields])
+    def complex(self):
+        any_ = any(
+            [
+                (field in self.__dict__)
+                for field in (Node.subnodes_fields + ["branches"])
+            ]
         )
+        return ("nodes" in self.__dict__ and self.nodes != []) == True or any_
 
     def trace_back(self):
         """Finds all chains nodes leading to this node's inputs.
