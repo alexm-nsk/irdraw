@@ -1,7 +1,7 @@
 import svgwrite
 import json
 from node import Node
-
+import consts
 
 def python_names(obj, fields=False):
     """Converts camelCase to snake_case in a dictionary
@@ -35,29 +35,38 @@ def get_piped_input():
     return input_text
 
 
-FUNC_FILL = "#cbcbcb"
-FUNC_STROKE = "#0b0b0b"
-FUNC_MARGIN = 3
-FUNC_ROUND = 3
-
-def draw_node(dwg, area, node):
+def draw_node(dwg, area, node: Node):
     rect = svgwrite.shapes.Rect(
-        insert=(area["left"] + FUNC_MARGIN, area["top"] + FUNC_MARGIN),
-        size=(area["width"]-FUNC_MARGIN*2, area["height"] - FUNC_MARGIN*2),
-        rx=FUNC_ROUND,
-        ry=FUNC_ROUND,
-        fill=FUNC_FILL,
-        stroke=FUNC_STROKE)
-
+        insert=(area["left"] + consts.FUNC_MARGIN,
+                area["top"] + consts.FUNC_MARGIN),
+        size=(area["width"]-consts.FUNC_MARGIN*2,
+              area["height"] - consts.FUNC_MARGIN*2),
+        rx=consts.FUNC_ROUND,
+        ry=consts.FUNC_ROUND,
+        fill=consts.FUNC_FILL,
+        stroke=consts.FUNC_STROKE)
     dwg.add(rect)
 
+    node.place(area)
+    for i_p in node.in_ports:
+        i_p.draw(dwg)
 
-def ir_render_to_svg(functions: list, area: dict) -> str:
+
+    for o_p in node.out_ports:
+        o_p.draw(dwg)
+
+
+    for n in node.nodes:
+        #draw_node
+        pass
+
+
+def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
     """converts an ir as python dict to an svg string"""
     image_width = area["width"]
     image_height = area["height"]
 
-    dwg = svgwrite.Drawing("../test.svg", size=(image_width, image_height))
+    dwg = svgwrite.Drawing(name, size=(image_width, image_height))
 
     for func in functions:
         func.num_subs = func.num_subnodes()
@@ -77,13 +86,20 @@ def ir_render_to_svg(functions: list, area: dict) -> str:
     # dwg.add(dwg.line((0, 0), (10, 0), stroke=svgwrite.rgb(10, 10, 16, "%")))
     # dwg.add(dwg.text("Test", insert=(0, 5), fill="red"))
     dwg.save()
+    print(f"Image {name} written.")
 
 
 if __name__ == "__main__":
     print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
     area = dict(width=1280, height=600)
-    with open("ir.json", "r") as file_:
+
+    input_file_name = "ir.json"
+
+    print(f"Reading IR file {input_file_name}.")
+    with open(input_file_name, "r") as file_:
         data = python_names(json.load(file_))
 
     functions = [Node(func) for func in data["functions"]]
-    ir_render_to_svg(functions, area)
+    file_name = "../test.svg"
+    print(f"Drawing.")
+    ir_render_to_svg(functions, area, file_name)

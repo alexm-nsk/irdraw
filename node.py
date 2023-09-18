@@ -6,6 +6,7 @@ code generator node (mostly deserealizing code)
 from port import Port
 
 from edge import Edge
+import consts
 
 
 def get_node(node_id):
@@ -293,11 +294,19 @@ class Node:
 
     def place(self, area: dict):
         num_ins = len(self.in_ports)
-        port_width = area["width"] / num_ins
+        port_width = 0.8 * area["width"] / (num_ins)
+        left = area["width"] / 2 - (((port_width + consts.PORT_MARGIN * 2 ) * num_ins) / 2)
         for i, i_p in enumerate(self.in_ports):
-            i_p.pos_x = i * port_width
-            i_p.pos_y = 0
+            i_p.pos_x = left + i * port_width + area["left"] + consts.FUNC_MARGIN
+            i_p.pos_y = consts.FUNC_MARGIN + consts.PORT_MARGIN
+            i_p.width = port_width
+
+        num_outs = len(self.out_ports)
+        port_width = 0.8 * area["width"] / (num_outs)
+        left = area["width"] / 2 - (((port_width + consts.PORT_MARGIN * 2 ) * num_outs) / 2)
 
         for i, o_p in enumerate(self.out_ports):
-            o_p.pos_x = i * port_width
-            o_p.pos_y = area["height"]
+            o_p.pos_x = left + i * port_width + area["left"] + consts.FUNC_MARGIN
+            o_p.pos_y = area["height"] - o_p.height - consts.FUNC_MARGIN -\
+                        consts.PORT_MARGIN
+            o_p.width = port_width

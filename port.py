@@ -5,6 +5,8 @@ Port for code generator
 """
 
 from itertools import count
+import svgwrite
+import consts
 
 
 class Port:
@@ -29,9 +31,20 @@ class Port:
     # drawing section:
     pos_x: float
     pos_y: float
-    width: float
-    height: float
+    width: float = 10
+    height: float = consts.PORT_HEIGHT
 
+    def draw(self, dwg: svgwrite.Drawing):
+        dwg.add(svgwrite.shapes.Rect(
+            insert=(self.pos_x, self.pos_y),
+            size=(self.width, self.height),
+            rx=consts.FUNC_ROUND,
+            ry=consts.FUNC_ROUND,
+            fill="#bbbbbb",
+            stroke="#111111"))
+        dwg.add(
+            dwg.text(text=self.label, insert=(self.pos_x + self.width/2, self.pos_y + consts.PORT_MARGIN), fill="black")
+        )
 
 
 def copy_port_values(src_ports, dst_ports):
