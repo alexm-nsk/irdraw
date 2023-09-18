@@ -36,7 +36,7 @@ def get_piped_input():
     return input_text
 
 
-def draw_node(dwg, area, node: Node):
+def draw_compl_node(dwg, area, node: Node):
     rect = svgwrite.shapes.Rect(
         insert=(area["left"] + consts.FUNC_MARGIN,
                 area["top"] + consts.FUNC_MARGIN),
@@ -58,6 +58,15 @@ def draw_node(dwg, area, node: Node):
         nodes, _, _ = edge.from_.node.trace_back()
         o_p.num_nodes = len(nodes)
 
+    # consider two cases : we have nodes, and hence no special isolated num_subnodes
+    # or we only have special isolated node types like "Then" or "Else"
+
+    # case #1
+    total_nodes = sum([o_p.num_nodes for o_p in node.out_ports])
+
+    for o_p in node.out_ports:
+        o_p.portion = o_p.num_nodes / total_nodes
+
 
 def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
     """converts an ir as python dict to an svg string"""
@@ -74,7 +83,7 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
     for func in functions:
         function_width = image_width * (func.num_subs / total_subnodes)
 
-        draw_node(dwg,
+        draw_compl_node(dwg,
                   dict(left=left,
                        top=0,
                        width=function_width,
