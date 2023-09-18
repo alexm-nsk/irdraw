@@ -40,11 +40,11 @@ classes = {
     "Scatter",
     "ArrayInit",
     "RecordInit",
-    "RecordAccess"
+    "RecordAccess",
 }
 
-class Node:
 
+class Node:
     node_index = {}
     needs_init = False
 
@@ -68,14 +68,18 @@ class Node:
         if not hasattr(node, "pragma_group"):
             return [node]
 
-        return [n for _, n in Node.node_index.items()
-                if hasattr(n, "pragma_group")
-                and n.pragma_group == node.pragma_group]
+        return [
+            n
+            for _, n in Node.node_index.items()
+            if hasattr(n, "pragma_group") and n.pragma_group == node.pragma_group
+        ]
 
     def get_group(group_index):
-        return [node for _, node in Node.node_index.items()
-                if hasattr(node, "pragma_group")
-                and node.pragma_group == group_index]
+        return [
+            node
+            for _, node in Node.node_index.items()
+            if hasattr(node, "pragma_group") and node.pragma_group == group_index
+        ]
 
     def get_parent_node(self):
         for name, node in Node.node_index.items():
@@ -88,9 +92,11 @@ class Node:
                         return br
 
             for sub_node in ["init", "body", "condition", "range_gen", "returns"]:
-                if (hasattr(node, sub_node) and
-                   hasattr(node.__dict__[sub_node], "nodes") and
-                   self in node.__dict__[sub_node].nodes):
+                if (
+                    hasattr(node, sub_node)
+                    and hasattr(node.__dict__[sub_node], "nodes")
+                    and self in node.__dict__[sub_node].nodes
+                ):
                     return sub_node
 
         return None
@@ -114,19 +120,19 @@ class Node:
             port["type"],  # chooses an appropriate class
             port["index"],
             port["label"] if "label" in port else None,
-            in_port
+            in_port,
         )
 
     def parse_ports(self, in_ports, out_ports):
         if in_ports:
-            self.in_ports = [self.parse_port(port, in_port=True)
-                             for port in in_ports]
+            self.in_ports = [self.parse_port(port, in_port=True) for port in in_ports]
         else:
             self.in_ports = []
 
         if out_ports:
-            self.out_ports = [self.parse_port(port, in_port=False)
-                              for port in out_ports]
+            self.out_ports = [
+                self.parse_port(port, in_port=False) for port in out_ports
+            ]
         else:
             self.out_ports = []
 
@@ -196,12 +202,10 @@ class Node:
         )
 
         if "nodes" in data:
-            self.nodes = [Node(node)
-                          for node in data["nodes"]]
+            self.nodes = [Node(node) for node in data["nodes"]]
 
         if "branches" in data:
-            self.branches = [Node(br)
-                             for br in data["branches"]]
+            self.branches = [Node(br) for br in data["branches"]]
 
         # sisal-cl IRs only:
         if "results" in data:
@@ -223,8 +227,16 @@ class Node:
             if isinstance(value, dict):
                 if "name" in value and value["name"] in classes:
                     self.__dict__[field] = Node(value)
-            elif field in ["value", "operator", "function_name",
-                           "callee", "field", "pragmas", "pragma_group", "port_to_name_index"]:
+            elif field in [
+                "value",
+                "operator",
+                "function_name",
+                "callee",
+                "field",
+                "pragmas",
+                "pragma_group",
+                "port_to_name_index",
+            ]:
                 self.__dict__[field] = value
 
         if "edges" in data:
@@ -237,9 +249,9 @@ class Node:
         self.read_data(data)
 
     def trace_back(self):
-        '''Finds all chains nodes leading to this node's inputs.
-           Returns the Nodes and all involved Edges.
-        '''
+        """Finds all chains nodes leading to this node's inputs.
+        Returns the Nodes and all involved Edges.
+        """
         internal_edges = []
         input_edges = []
         nodes = [self]
@@ -257,3 +269,20 @@ class Node:
                 input_edges.append(input_edge)
 
         return nodes, internal_edges, input_edges
+
+    # drawing section:
+    pos_x: float
+    pos_y: float
+    width: float
+    height: float
+
+    def place(self, area: dict):
+        num_ins = len(self.in_ports)
+        port_width = area["width"] / num_ins
+        for i, i_p in enumerate(self.in_ports):
+            i_p.pos_x = i * port_width
+            i_p.pos_y = 0
+
+        for i, o_p in enumerate(self.out_ports):
+            o_p.pos_x = i * port_width
+            o_p.pos_y = area["height"]

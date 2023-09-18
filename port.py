@@ -26,6 +26,13 @@ class Port:
             f", {self.type}, {self.value}>"
         )
 
+    # drawing section:
+    pos_x: float
+    pos_y: float
+    width: float
+    height: float
+
+
 
 def copy_port_values(src_ports, dst_ports):
     """Copy C++ values assigned to source ports to matching destination ports.
