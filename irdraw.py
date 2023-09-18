@@ -4,6 +4,7 @@ from node import Node
 import consts
 from edge import Edge
 
+
 def python_names(obj, fields=False):
     """Converts camelCase to snake_case in a dictionary
     fields is signalling that this sub dictionary is from a user defined
@@ -38,14 +39,16 @@ def get_piped_input():
 
 def draw_compl_node(dwg, area, node: Node):
     rect = svgwrite.shapes.Rect(
-        insert=(area["left"] + consts.FUNC_MARGIN,
-                area["top"] + consts.FUNC_MARGIN),
-        size=(area["width"]-consts.FUNC_MARGIN*2,
-              area["height"] - consts.FUNC_MARGIN*2),
+        insert=(area["left"] + consts.FUNC_MARGIN, area["top"] + consts.FUNC_MARGIN),
+        size=(
+            area["width"] - consts.FUNC_MARGIN * 2,
+            area["height"] - consts.FUNC_MARGIN * 2,
+        ),
         rx=consts.FUNC_ROUND,
         ry=consts.FUNC_ROUND,
         fill=consts.FUNC_FILL,
-        stroke=consts.FUNC_STROKE)
+        stroke=consts.FUNC_STROKE,
+    )
     dwg.add(rect)
 
     node.place(area)
@@ -70,14 +73,27 @@ def draw_compl_node(dwg, area, node: Node):
         for o_p in node.out_ports:
             o_p.portion = o_p.num_nodes / total_nodes
             vert_offset = consts.FUNC_MARGIN * 2 + consts.PORT_HEIGHT
-            sub_width = o_p.portion*area["width"] - consts.FUNC_MARGIN * 2
-            sub_area = dict(left = left + consts.FUNC_MARGIN,
-                        top = area["top"] + vert_offset,
-                        width = sub_width,
-                        height = area["height"] - vert_offset*2)
+            sub_width = o_p.portion * area["width"] - consts.FUNC_MARGIN * 2
+            sub_area = dict(
+                left=left + consts.FUNC_MARGIN,
+                top=area["top"] + vert_offset,
+                width=sub_width,
+                height=area["height"] - vert_offset * 2,
+            )
             left += sub_width
-            #print(sub_area)
+            # print(sub_area)
             draw_compl_node(dwg, sub_area, o_p.output_node)
+
+    dwg.add(
+        dwg.text(
+            text=node.function_name if node.name == "Lambda" else node.name,
+            insert=(
+                area["left"] + consts.FUNC_MARGIN,
+                area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT,
+            ),
+            fill="black",
+        )
+    )
 
 
 def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
@@ -95,12 +111,9 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
     for func in functions:
         function_width = image_width * (func.num_subs / total_subnodes)
 
-        draw_compl_node(dwg,
-                  dict(left=left,
-                       top=0,
-                       width=function_width,
-                       height=image_height),
-                  func)
+        draw_compl_node(
+            dwg, dict(left=left, top=0, width=function_width, height=image_height), func
+        )
         left += function_width
     # dwg.add(dwg.line((0, 0), (10, 0), stroke=svgwrite.rgb(10, 10, 16, "%")))
     # dwg.add(dwg.text("Test", insert=(0, 5), fill="red"))
@@ -109,16 +122,16 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
 
 
 if __name__ == "__main__":
-    #print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
-    area = dict(width=1280, height=600)
+    # print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
+    area = dict(width=1920, height=1080)
 
     input_file_name = "ir.json"
 
-    #print(f"Reading IR file {input_file_name}.")
+    # print(f"Reading IR file {input_file_name}.")
     with open(input_file_name, "r") as file_:
         data = python_names(json.load(file_))
 
     functions = [Node(func) for func in data["functions"]]
     file_name = "../test.svg"
-    #print(f"Drawing.")
+    # print(f"Drawing.")
     ir_render_to_svg(functions, area, file_name)
