@@ -39,39 +39,54 @@ def get_piped_input():
 
 
 def draw_compl_node(dwg, area, node: Node):
-    rect = svgwrite.shapes.Rect(
-        insert=(area["left"] + consts.FUNC_MARGIN, area["top"] + consts.FUNC_MARGIN),
-        size=(
-            area["width"] - consts.FUNC_MARGIN * 2,
-            area["height"] - consts.FUNC_MARGIN * 2,
-        ),
-        rx=consts.FUNC_ROUND,
-        ry=consts.FUNC_ROUND,
-        fill=consts.FUNC_FILL if node.complex else consts.SIMPLE_FILL,
-        stroke=consts.FUNC_STROKE,
-        opacity = 0.6 if node.complex else 1
-    )
-    dwg.add(rect)
+    def draw():
+        rect = svgwrite.shapes.Rect(
+            insert=(
+                area["left"] + consts.FUNC_MARGIN,
+                area["top"] + consts.FUNC_MARGIN,
+            ),
+            size=(
+                area["width"] - consts.FUNC_MARGIN * 2,
+                area["height"] - consts.FUNC_MARGIN * 2,
+            ),
+            rx=consts.FUNC_ROUND,
+            ry=consts.FUNC_ROUND,
+            fill=consts.FUNC_FILL if node.complex else consts.SIMPLE_FILL,
+            stroke=consts.FUNC_STROKE,
+            opacity=0.6 if node.complex else 1,
+        )
+        dwg.add(rect)
 
-    node.place(area)
-    for i_p in node.in_ports:
-        i_p.draw(dwg)
+        node.place(area)
+        for i_p in node.in_ports:
+            i_p.draw(dwg)
 
-    for o_p in node.out_ports:
-        o_p.draw(dwg)
-        if o_p.id in Edge.edge_to:
-            edge = Edge.edge_to[o_p.id]
-            if edge.from_.node != node:
-                nodes, _, _ = edge.from_.node.trace_back()
-                o_p.num_nodes = len(nodes)
-                o_p.output_node = edge.from_.node
-            else:
-                o_p.output_node = None
-                o_p.num_nodes = 0
+        for o_p in node.out_ports:
+            o_p.draw(dwg)
+            if o_p.id in Edge.edge_to:
+                edge = Edge.edge_to[o_p.id]
+                if edge.from_.node != node:
+                    nodes, _, _ = edge.from_.node.trace_back()
+                    o_p.num_nodes = len(nodes)
+                    o_p.output_node = edge.from_.node
+                else:
+                    o_p.output_node = None
+                    o_p.num_nodes = 0
+        dwg.add(
+            dwg.text(
+                text=node.function_name if node.name == "Lambda" else node.name,
+                insert=(
+                    area["left"] + consts.FUNC_MARGIN,
+                    area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT,
+                ),
+                fill="black",
+            )
+        )
 
     # consider two cases : we have nodes, and hence no special isolated num_subnodes
     # or we only have special isolated node types like "Then" or "Else"
     if node.complex:
+        draw()
         special = not ("nodes" in node.__dict__)
         # case #1
 
@@ -90,7 +105,7 @@ def draw_compl_node(dwg, area, node: Node):
                 )
                 left += sub_width
                 # print(sub_area)
-                if(o_p.output_node):
+                if o_p.output_node:
                     draw_compl_node(dwg, sub_area, o_p.output_node)
         else:
             singles = ["body", "init", "condition", "range_gen", "returns"]
@@ -107,33 +122,34 @@ def draw_compl_node(dwg, area, node: Node):
                 if b in node.__dict__:
                     num_subs += len(node.__dict__[b])
                     subnodes += node.__dict__[b]
+
             if num_subs:
                 side = math.ceil(math.sqrt(num_subs))
-                width = area["width"] / side - consts.FUNC_MARGIN*2
-                height = area["height"] / side - consts.FUNC_MARGIN * 2 - consts.PORT_HEIGHT
+                width = area["width"] / side - consts.FUNC_MARGIN * 2
+                height = (
+                    area["height"] / side - consts.FUNC_MARGIN * 2 -
+                    consts.PORT_HEIGHT
+                )
                 for i, new_node in enumerate(subnodes):
-                    print(new_node.name)
                     left = (width) * (i % side) + consts.FUNC_MARGIN
-                    top = height * int(i / side) + consts.FUNC_MARGIN * 2 + consts.PORT_HEIGHT
-                    new_area = dict(left = area["left"] + left,
-                                    top = area["top"] + top,
-                                    width = width,
-                                    height = height)
+                    top = (
+                        height * int(i / side)
+                        + consts.FUNC_MARGIN * 2
+                        + consts.PORT_HEIGHT
+                    )
+                    new_area = dict(
+                        left=area["left"] + left,
+                        top=area["top"] + top,
+                        width=width,
+                        height=height,
+                    )
+
                     draw_compl_node(dwg, new_area, new_node)
     else:
         # simple small nodes
+        # here we place all small nodes
+        print(area, node.trace_back())
         pass
-
-    dwg.add(
-        dwg.text(
-            text=node.function_name if node.name == "Lambda" else node.name,
-            insert=(
-                area["left"] + consts.FUNC_MARGIN,
-                area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT,
-            ),
-            fill="black",
-        )
-    )
 
 
 def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
@@ -152,7 +168,9 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
         function_width = image_width * (func.num_subs / total_subnodes)
 
         draw_compl_node(
-            dwg, dict(left=left, top=0, width=function_width, height=image_height), func
+            dwg, dict(left=left, top=0, width=function_width,
+                      height=image_height),
+            func
         )
         left += function_width
     # dwg.add(dwg.line((0, 0), (10, 0), stroke=svgwrite.rgb(10, 10, 16, "%")))
