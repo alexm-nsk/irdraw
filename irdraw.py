@@ -153,8 +153,8 @@ def draw_compl_node(dwg, area, node: Node):
             dict(
                 left=area["left"] + consts.FUNC_MARGIN,
                 top=area["height"] + area["top"] - level_height,
-                width=area["width"] - consts.FUNC_MARGIN * 2,
-                height=level_height - consts.FUNC_MARGIN * 2,
+                width=area["width"] - consts.FUNC_MARGIN,
+                height=level_height - consts.FUNC_MARGIN,
             ),
             node,
         )
@@ -163,7 +163,7 @@ def draw_compl_node(dwg, area, node: Node):
         left = 0
         for i, i_p in enumerate(node.in_ports):
             in_node = Edge.edge_to[i_p.id].from_.node
-            ip_subtree_size = in_node.in_chain_size() / sub_tree_size
+            ip_subtree_size = (in_node.in_chain_size()) / (sub_tree_size)
             sub_tree_width = area["width"] * ip_subtree_size
             if not node.is_parent(in_node):
                 draw_compl_node(dwg,
