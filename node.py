@@ -219,9 +219,9 @@ class Node:
                 self.in_ports[index].label = result[0]
 
         if self.name == "Let":
-            from .ast_.let import LetBody
+            #from .ast_.let import LetBody
 
-            self.body = LetBody(data["body"])
+            self.body = Node(data["body"])
             del data["body"]
 
         for field, value in data.items():

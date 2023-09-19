@@ -124,15 +124,16 @@ def draw_compl_node(dwg, area, node: Node):
                     subnodes += node.__dict__[b]
 
             if num_subs:
-                side = math.ceil(math.sqrt(num_subs))
-                width = area["width"] / side - consts.FUNC_MARGIN * 2
+                sidex = math.ceil(math.sqrt(num_subs)) if num_subs>2 else 1
+                sidey = math.ceil(math.sqrt(num_subs)) if num_subs>2 else num_subs
+                width = area["width"] / sidex - consts.FUNC_MARGIN * 2
                 height = (
-                    area["height"] / side - consts.FUNC_MARGIN * 2 - consts.PORT_HEIGHT
+                    area["height"] / sidey - consts.FUNC_MARGIN * 2 - consts.PORT_HEIGHT
                 )
                 for i, new_node in enumerate(subnodes):
-                    left = (width) * (i % side) + consts.FUNC_MARGIN
+                    left = (width) * (i % sidex) + consts.FUNC_MARGIN
                     top = (
-                        height * int(i / side)
+                        height * int(i / sidex)
                         + consts.FUNC_MARGIN * 2
                         + consts.PORT_HEIGHT
                     )
@@ -213,9 +214,9 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
 
 if __name__ == "__main__":
     # print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
-    area = dict(width=3000, height=3000)
+    area = dict(width=6000, height=6000)
 
-    input_file_name = "ir.json"
+    input_file_name = "record.json"
 
     # print(f"Reading IR file {input_file_name}.")
     with open(input_file_name, "r") as file_:
