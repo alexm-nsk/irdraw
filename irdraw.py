@@ -39,7 +39,7 @@ def get_piped_input():
 
 
 def draw_compl_node(dwg, area, node: Node):
-    def draw():
+    def draw(area=area, node=node):
         rect = svgwrite.shapes.Rect(
             insert=(
                 area["left"] + consts.FUNC_MARGIN,
@@ -66,7 +66,7 @@ def draw_compl_node(dwg, area, node: Node):
             if o_p.id in Edge.edge_to:
                 edge = Edge.edge_to[o_p.id]
                 if edge.from_.node != node:
-                    nodes, _, _ = edge.from_.node.trace_back()
+                    nodes, _, _, _ = edge.from_.node.trace_back()
                     o_p.num_nodes = len(nodes)
                     o_p.output_node = edge.from_.node
                 else:
@@ -74,7 +74,7 @@ def draw_compl_node(dwg, area, node: Node):
                     o_p.num_nodes = 0
         dwg.add(
             dwg.text(
-                text=node.function_name if node.name == "Lambda" else node.name,
+                text=(node.function_name if node.name == "Lambda" else node.name) + (f": {node.value}" if hasattr(node, "value") else ""),
                 insert=(
                     area["left"] + consts.FUNC_MARGIN,
                     area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT,
@@ -127,8 +127,7 @@ def draw_compl_node(dwg, area, node: Node):
                 side = math.ceil(math.sqrt(num_subs))
                 width = area["width"] / side - consts.FUNC_MARGIN * 2
                 height = (
-                    area["height"] / side - consts.FUNC_MARGIN * 2 -
-                    consts.PORT_HEIGHT
+                    area["height"] / side - consts.FUNC_MARGIN * 2 - consts.PORT_HEIGHT
                 )
                 for i, new_node in enumerate(subnodes):
                     left = (width) * (i % side) + consts.FUNC_MARGIN
@@ -148,8 +147,37 @@ def draw_compl_node(dwg, area, node: Node):
     else:
         # simple small nodes
         # here we place all small nodes
-        print(area, node.trace_back())
-        pass
+        nodes, _, _, height = node.trace_back()
+        level_height = area["height"] / height
+        draw(
+            dict(
+                left=area["left"] + consts.FUNC_MARGIN,
+                top=area["height"] + area["top"] - level_height,
+                width=area["width"] - consts.FUNC_MARGIN * 2,
+                height=level_height - consts.FUNC_MARGIN * 2,
+            ),
+            node,
+        )
+        # numins = len(node.in_ports)
+        sub_tree_size = node.in_chain_size()
+        left = 0
+        for i, i_p in enumerate(node.in_ports):
+            in_node = Edge.edge_to[i_p.id].from_.node
+            ip_subtree_size = in_node.in_chain_size() / sub_tree_size
+            sub_tree_width = area["width"] * ip_subtree_size
+            if not node.is_parent(in_node):
+                draw_compl_node(dwg,
+                    dict(
+                        left=area["left"] + left,
+                        top=area["top"],
+                        width=sub_tree_width,
+                        height=area["height"]-level_height,
+                    ),
+                    in_node
+                )
+                left += sub_tree_width
+
+    #    draw(area, node)
 
 
 def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
@@ -168,20 +196,24 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
         function_width = image_width * (func.num_subs / total_subnodes)
 
         draw_compl_node(
-            dwg, dict(left=left, top=0, width=function_width,
-                      height=image_height),
-            func
+            dwg, dict(left=left, top=0, width=function_width, height=image_height), func
         )
         left += function_width
     # dwg.add(dwg.line((0, 0), (10, 0), stroke=svgwrite.rgb(10, 10, 16, "%")))
     # dwg.add(dwg.text("Test", insert=(0, 5), fill="red"))
+    for e in Edge.edges:
+        x1 = e.from_.pos_x + e.from_.width/2
+        y1 = e.from_.pos_y + e.from_.height/2
+        x2 = e.to.pos_x + e.to.width/2
+        y2 = e.to.pos_y + e.to.height/2
+        dwg.add(dwg.line((x1, y1), (x2, y2), stroke=svgwrite.rgb(10, 10, 16, "%")))
     dwg.save()
     print(f"Image {name} written.")
 
 
 if __name__ == "__main__":
     # print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
-    area = dict(width=1920, height=1080)
+    area = dict(width=3000, height=3000)
 
     input_file_name = "ir.json"
 

@@ -266,23 +266,29 @@ class Node:
         internal_edges = []
         input_edges = []
         nodes = [self]
+        height = 1
+        sub_heights  = [0]
 
         for i_p in self.in_ports:
-            try:
-                input_edge = Edge.edge_to[i_p.id]
-            except:
-                breakpoint()
+            if i_p.id not in Edge.edge_to:
+                continue
+            input_edge = Edge.edge_to[i_p.id]
             from_ = input_edge.from_
             if not from_.in_port:
-                new_nodes, new_edges, new_input_edges = from_.node.trace_back()
+                new_nodes, new_edges, new_input_edges, sub_height = from_.node.trace_back()
+                sub_heights.append(sub_height)
                 nodes.extend(new_nodes)
                 internal_edges.extend(new_edges)
                 input_edges.extend(new_input_edges)
                 internal_edges.append(input_edge)
             else:
                 input_edges.append(input_edge)
+        height += max(sub_heights)
+        return nodes, internal_edges, input_edges, height
 
-        return nodes, internal_edges, input_edges
+    def in_chain_size(self):
+        new_nodes, new_edges, new_input_edges, sub_height = self.trace_back()
+        return len(new_nodes)
 
     subnodes_fields = ["body", "init", "condition", "range_gen", "returns"]
 
@@ -307,7 +313,7 @@ class Node:
 
     def place(self, area: dict):
         num_ins = len(self.in_ports)
-        port_width = 0.8 * area["width"] / (num_ins)
+        port_width = 0.8 * area["width"] / (num_ins) if num_ins else 0
         left = area["width"] / 2 - (
             ((port_width + consts.PORT_MARGIN * 2) * num_ins) / 2
         )
