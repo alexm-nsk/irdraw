@@ -175,7 +175,7 @@ def draw_compl_node(dwg, area, node: Node):
                     ),
                     in_node
                 )
-                left += sub_tree_width
+            left += sub_tree_width
 
     #    draw(area, node)
 
@@ -203,9 +203,9 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
     # dwg.add(dwg.text("Test", insert=(0, 5), fill="red"))
     for e in Edge.edges:
         x1 = e.from_.pos_x + e.from_.width/2
-        y1 = e.from_.pos_y + e.from_.height/2
+        y1 = e.from_.pos_y + e.from_.height/2 + consts.PORT_HEIGHT/2
         x2 = e.to.pos_x + e.to.width/2
-        y2 = e.to.pos_y + e.to.height/2
+        y2 = e.to.pos_y + e.to.height/2 - consts.PORT_HEIGHT/2
         dwg.add(dwg.line((x1, y1), (x2, y2), stroke=svgwrite.rgb(10, 10, 16, "%")))
     dwg.save()
     print(f"Image {name} written.")
