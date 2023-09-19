@@ -86,9 +86,10 @@ def draw_compl_node(dwg, area, node: Node):
                 + (f": {node.value}" if hasattr(node, "value") else ""),
                 insert=(
                     area["left"] + consts.FUNC_MARGIN,
-                    area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT,
+                    area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT*1.5,
                 ),
                 fill="black",
+                font_size="15"
             )
         )
         dwg.add(
@@ -96,9 +97,10 @@ def draw_compl_node(dwg, area, node: Node):
                 text=node.id,
                 insert=(
                     area["left"] + consts.FUNC_MARGIN,
-                    area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT * 2,
+                    area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT * 2.5,
                 ),
                 fill="black",
+                font_size="10"
             )
         )
 
