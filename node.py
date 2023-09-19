@@ -257,7 +257,7 @@ class Node:
                 for field in (Node.subnodes_fields + ["branches"])
             ]
         )
-        return ("nodes" in self.__dict__ and self.nodes != []) == True or any_
+        return ("nodes" in self.__dict__ and self.nodes != []) == True or any_ or self.name in ["Then", "Condition", "Else", "Elfseif"]
 
     def trace_back(self):
         """Finds all chains nodes leading to this node's inputs.
@@ -268,7 +268,10 @@ class Node:
         nodes = [self]
 
         for i_p in self.in_ports:
-            input_edge = Edge.edge_to[i_p.id]
+            try:
+                input_edge = Edge.edge_to[i_p.id]
+            except:
+                breakpoint()
             from_ = input_edge.from_
             if not from_.in_port:
                 new_nodes, new_edges, new_input_edges = from_.node.trace_back()

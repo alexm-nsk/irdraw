@@ -3,6 +3,7 @@ import json
 from node import Node
 import consts
 from edge import Edge
+import math
 
 
 def python_names(obj, fields=False):
@@ -46,8 +47,9 @@ def draw_compl_node(dwg, area, node: Node):
         ),
         rx=consts.FUNC_ROUND,
         ry=consts.FUNC_ROUND,
-        fill=consts.FUNC_FILL,
+        fill=consts.FUNC_FILL if node.complex else consts.SIMPLE_FILL,
         stroke=consts.FUNC_STROKE,
+        opacity = 0.6 if node.complex else 1
     )
     dwg.add(rect)
 
@@ -59,30 +61,68 @@ def draw_compl_node(dwg, area, node: Node):
         o_p.draw(dwg)
         if o_p.id in Edge.edge_to:
             edge = Edge.edge_to[o_p.id]
-            nodes, _, _ = edge.from_.node.trace_back()
-            o_p.num_nodes = len(nodes)
-            o_p.output_node = edge.from_.node
+            if edge.from_.node != node:
+                nodes, _, _ = edge.from_.node.trace_back()
+                o_p.num_nodes = len(nodes)
+                o_p.output_node = edge.from_.node
+            else:
+                o_p.output_node = None
+                o_p.num_nodes = 0
 
     # consider two cases : we have nodes, and hence no special isolated num_subnodes
     # or we only have special isolated node types like "Then" or "Else"
-    special = not ("nodes" in node.__dict__)
-    # case #1
-    if not special:
-        total_nodes = sum([o_p.num_nodes for o_p in node.out_ports])
-        left = area["left"]
-        for o_p in node.out_ports:
-            o_p.portion = o_p.num_nodes / total_nodes
-            vert_offset = consts.FUNC_MARGIN * 2 + consts.PORT_HEIGHT
-            sub_width = o_p.portion * area["width"] - consts.FUNC_MARGIN * 2
-            sub_area = dict(
-                left=left + consts.FUNC_MARGIN,
-                top=area["top"] + vert_offset,
-                width=sub_width,
-                height=area["height"] - vert_offset * 2,
-            )
-            left += sub_width
-            # print(sub_area)
-            draw_compl_node(dwg, sub_area, o_p.output_node)
+    if node.complex:
+        special = not ("nodes" in node.__dict__)
+        # case #1
+
+        if not special:
+            total_nodes = sum([o_p.num_nodes for o_p in node.out_ports])
+            left = area["left"]
+            for o_p in node.out_ports:
+                o_p.portion = o_p.num_nodes / total_nodes
+                vert_offset = consts.FUNC_MARGIN * 2 + consts.PORT_HEIGHT
+                sub_width = o_p.portion * area["width"] - consts.FUNC_MARGIN * 2
+                sub_area = dict(
+                    left=left + consts.FUNC_MARGIN,
+                    top=area["top"] + vert_offset,
+                    width=sub_width,
+                    height=area["height"] - vert_offset * 2,
+                )
+                left += sub_width
+                # print(sub_area)
+                if(o_p.output_node):
+                    draw_compl_node(dwg, sub_area, o_p.output_node)
+        else:
+            singles = ["body", "init", "condition", "range_gen", "returns"]
+            multis = ["branches"]
+
+            num_subs = 0
+            subnodes = []
+            for s in singles:
+                if s in node.__dict__:
+                    num_subs += 1
+                    subnodes += [node.__dict__[s]]
+
+            for b in multis:
+                if b in node.__dict__:
+                    num_subs += len(node.__dict__[b])
+                    subnodes += node.__dict__[b]
+            if num_subs:
+                side = math.ceil(math.sqrt(num_subs))
+                width = area["width"] / side - consts.FUNC_MARGIN*2
+                height = area["height"] / side - consts.FUNC_MARGIN * 2 - consts.PORT_HEIGHT
+                for i, new_node in enumerate(subnodes):
+                    print(new_node.name)
+                    left = (width) * (i % side) + consts.FUNC_MARGIN
+                    top = height * int(i / side) + consts.FUNC_MARGIN * 2 + consts.PORT_HEIGHT
+                    new_area = dict(left = area["left"] + left,
+                                    top = area["top"] + top,
+                                    width = width,
+                                    height = height)
+                    draw_compl_node(dwg, new_area, new_node)
+    else:
+        # simple small nodes
+        pass
 
     dwg.add(
         dwg.text(
