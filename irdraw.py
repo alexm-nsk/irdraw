@@ -236,7 +236,7 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
 
 if __name__ == "__main__":
     # print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
-    area = dict(width=1000, height=1000)
+    area = dict(width=2000, height=2000)
     import sys
 
     input_file_name = sys.argv[1]
@@ -246,6 +246,6 @@ if __name__ == "__main__":
         data = python_names(json.load(file_))
 
     functions = [Node(func) for func in data["functions"]]
-    file_name = "../test.svg"
+    file_name = "../" + input_file_name.rsplit(".")[0] + ".svg"
     # print(f"Drawing.")
     ir_render_to_svg(functions, area, file_name)
