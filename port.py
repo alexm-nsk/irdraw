@@ -36,8 +36,8 @@ class Port:
 
     def draw(self, dwg: svgwrite.Drawing):
         dwg.add(svgwrite.shapes.Rect(
-            insert=(self.pos_x, self.pos_y),
-            size=(self.width, self.height),
+            insert=(self.pos_x + consts.PORT_MARGIN, self.pos_y),
+            size=(self.width - consts.PORT_MARGIN, self.height),
             rx=consts.FUNC_ROUND,
             ry=consts.FUNC_ROUND,
             fill=consts.INPORT_FILL if self.in_port else consts.OUTPORT_FILL,
