@@ -1,0 +1,404 @@
+{
+ "functions": [
+  {
+   "id": "node7",
+   "location": "1:0-6:12",
+   "pragmas": [
+    {
+     "name": "timeout",
+     "args": [
+      "3"
+     ]
+    }
+   ],
+   "functionName": "main",
+   "name": "Lambda",
+   "inPorts": [
+    {
+     "nodeId": "node7",
+     "type": {
+      "location": "2:19-2:26",
+      "name": "integer"
+     },
+     "index": 0,
+     "label": "M"
+    }
+   ],
+   "outPorts": [
+    {
+     "nodeId": "node7",
+     "type": {
+      "location": "2:35-2:42",
+      "name": "integer"
+     },
+     "index": 0
+    }
+   ],
+   "nodes": [
+    {
+     "id": "node6",
+     "location": "3:2-5:9",
+     "name": "LoopExpression",
+     "inPorts": [
+      {
+       "nodeId": "node6",
+       "type": {
+        "location": "2:19-2:26",
+        "name": "integer"
+       },
+       "index": 0,
+       "label": "M"
+      }
+     ],
+     "outPorts": [
+      {
+       "nodeId": "node6",
+       "type": {
+        "location": "2:35-2:42",
+        "name": "integer"
+       },
+       "index": 0,
+       "label": "reduction_0"
+      }
+     ],
+     "rangeGen": {
+      "id": "node3",
+      "location": "3:6-4:4",
+      "name": "RangeGen",
+      "outPorts": [
+       {
+        "nodeId": "node3",
+        "type": {
+         "location": "3:6-3:7",
+         "name": "integer"
+        },
+        "index": 0,
+        "label": "i"
+       },
+       {
+        "nodeId": "node3",
+        "type": {
+         "location": "not applicable",
+         "name": "integer"
+        },
+        "index": 1,
+        "label": "i_index"
+       }
+      ],
+      "inPorts": [
+       {
+        "nodeId": "node3",
+        "type": {
+         "location": "2:19-2:26",
+         "name": "integer"
+        },
+        "index": 0,
+        "label": "M"
+       }
+      ],
+      "nodes": [
+       {
+        "id": "node2",
+        "location": "3:6-4:4",
+        "name": "Scatter",
+        "inPorts": [
+         {
+          "nodeId": "node2",
+          "type": {
+           "location": "not applicable",
+           "name": "integer",
+           "multiType": "stream"
+          },
+          "index": 0
+         }
+        ],
+        "outPorts": [
+         {
+          "nodeId": "node2",
+          "type": {
+           "location": "3:6-3:7",
+           "name": "integer"
+          },
+          "index": 0,
+          "label": "element"
+         },
+         {
+          "nodeId": "node2",
+          "type": {
+           "location": "not applicable",
+           "name": "integer"
+          },
+          "index": 1,
+          "label": "index"
+         }
+        ]
+       },
+       {
+        "id": "node1",
+        "location": "3:11-4:4",
+        "name": "Range",
+        "outPorts": [
+         {
+          "nodeId": "node1",
+          "type": {
+           "location": "not applicable",
+           "name": "integer",
+           "multiType": "stream"
+          },
+          "index": 0,
+          "label": "range output"
+         }
+        ],
+        "inPorts": [
+         {
+          "nodeId": "node1",
+          "type": {
+           "location": "not applicable",
+           "name": "integer"
+          },
+          "index": 0,
+          "label": "left boundary"
+         },
+         {
+          "nodeId": "node1",
+          "type": {
+           "location": "not applicable",
+           "name": "integer"
+          },
+          "index": 1,
+          "label": "right boundary"
+         }
+        ]
+       },
+       {
+        "id": "node0",
+        "location": "3:11-3:12",
+        "value": "1",
+        "name": "Literal",
+        "outPorts": [
+         {
+          "nodeId": "node0",
+          "type": {
+           "location": "3:11-3:12",
+           "name": "integer"
+          },
+          "index": 0
+         }
+        ],
+        "pragmas": []
+       }
+      ],
+      "edges": [
+       {
+        "from": [
+         "node0",
+         0
+        ],
+        "to": [
+         "node1",
+         0
+        ]
+       },
+       {
+        "from": [
+         "node3",
+         0
+        ],
+        "to": [
+         "node1",
+         1
+        ]
+       },
+       {
+        "from": [
+         "node1",
+         0
+        ],
+        "to": [
+         "node2",
+         0
+        ]
+       },
+       {
+        "from": [
+         "node2",
+         0
+        ],
+        "to": [
+         "node3",
+         0
+        ]
+       },
+       {
+        "from": [
+         "node2",
+         1
+        ],
+        "to": [
+         "node3",
+         1
+        ]
+       }
+      ]
+     },
+     "returns": {
+      "id": "node5",
+      "location": "4:4-5:2",
+      "name": "Returns",
+      "outPorts": [
+       {
+        "nodeId": "node5",
+        "type": {
+         "location": "2:35-2:42",
+         "name": "integer"
+        },
+        "index": 0,
+        "label": "reduction_0"
+       }
+      ],
+      "inPorts": [
+       {
+        "nodeId": "node5",
+        "type": {
+         "location": "3:6-3:7",
+         "name": "integer"
+        },
+        "index": 0,
+        "label": "i"
+       },
+       {
+        "nodeId": "node5",
+        "type": {
+         "location": "not applicable",
+         "name": "integer"
+        },
+        "index": 1,
+        "label": "i_index"
+       },
+       {
+        "nodeId": "node5",
+        "type": {
+         "location": "2:19-2:26",
+         "name": "integer"
+        },
+        "index": 2,
+        "label": "M"
+       }
+      ],
+      "nodes": [
+       {
+        "id": "node4",
+        "location": "4:12-5:2",
+        "name": "Reduction",
+        "operator": "product",
+        "outPorts": [
+         {
+          "nodeId": "node4",
+          "type": {
+           "location": "3:6-3:7",
+           "name": "integer"
+          },
+          "index": 0,
+          "label": "reduction output"
+         }
+        ],
+        "inPorts": [
+         {
+          "nodeId": "node4",
+          "type": {
+           "location": "not applicable",
+           "name": "boolean"
+          },
+          "index": 0,
+          "label": "reduction cond input"
+         },
+         {
+          "nodeId": "node4",
+          "type": {
+           "location": "3:6-3:7",
+           "name": "integer"
+          },
+          "index": 1,
+          "label": "reduction value input"
+         }
+        ]
+       },
+       {
+        "id": "node8",
+        "location": "not applicable",
+        "value": true,
+        "name": "Literal",
+        "outPorts": [
+         {
+          "nodeId": "node8",
+          "type": {
+           "location": "not applicable",
+           "name": "boolean"
+          },
+          "index": 0
+         }
+        ]
+       }
+      ],
+      "edges": [
+       {
+        "from": [
+         "node5",
+         0
+        ],
+        "to": [
+         "node4",
+         1
+        ]
+       },
+       {
+        "from": [
+         "node8",
+         0
+        ],
+        "to": [
+         "node4",
+         0
+        ]
+       },
+       {
+        "from": [
+         "node4",
+         0
+        ],
+        "to": [
+         "node5",
+         0
+        ]
+       }
+      ]
+     },
+     "pragmas": []
+    }
+   ],
+   "edges": [
+    {
+     "from": [
+      "node6",
+      0
+     ],
+     "to": [
+      "node7",
+      0
+     ]
+    },
+    {
+     "from": [
+      "node7",
+      0
+     ],
+     "to": [
+      "node6",
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "errors": []
+}
