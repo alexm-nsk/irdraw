@@ -247,8 +247,6 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
 
 if __name__ == "__main__":
     # print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
-
-
     import sys
 
     input_file_name = sys.argv[1]
