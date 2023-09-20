@@ -69,7 +69,10 @@ def draw_compl_node(dwg, area, node: Node):
                     nodes, _, _, _ = edge.from_.node.trace_back()
                     o_p.skip = False
                     for prev_o_p in node.out_ports:
-                        if "output_node" in prev_o_p.__dict__ and edge.from_.node == prev_o_p.output_node:
+                        if (
+                            "output_node" in prev_o_p.__dict__
+                            and edge.from_.node == prev_o_p.output_node
+                        ):
                             o_p.num_nodes = 0
                             o_p.output_node = None
                             o_p.skip = True
@@ -86,10 +89,10 @@ def draw_compl_node(dwg, area, node: Node):
                 + (f": {node.value}" if hasattr(node, "value") else ""),
                 insert=(
                     area["left"] + consts.FUNC_MARGIN,
-                    area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT*1.5,
+                    area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT * 1.5,
                 ),
                 fill="black",
-                font_size="15"
+                font_size="15",
             )
         )
         dwg.add(
@@ -100,7 +103,7 @@ def draw_compl_node(dwg, area, node: Node):
                     area["top"] + consts.FUNC_MARGIN + consts.FONT_HEIGHT * 2.5,
                 ),
                 fill="black",
-                font_size="10"
+                font_size="10",
             )
         )
 
