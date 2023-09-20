@@ -109,7 +109,8 @@
            "name": "integer",
            "multiType": "stream"
           },
-          "index": 0
+          "index": 0,
+          "label": "input"
          }
         ],
         "outPorts": [

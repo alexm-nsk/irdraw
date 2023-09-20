@@ -232,14 +232,23 @@ def ir_render_to_svg(functions: list, area: dict, name: str) -> str:
         y1 = e.from_.pos_y + e.from_.height / 2 + consts.PORT_HEIGHT / 2
         x2 = e.to.pos_x + e.to.width / 2
         y2 = e.to.pos_y + e.to.height / 2 - consts.PORT_HEIGHT / 2
-        dwg.add(dwg.line((x1, y1), (x2, y2), stroke=svgwrite.rgb(10, 10, 16, "%")))
+        dwg.add(
+                dwg.line(
+                    (x1, y1),
+                    (x2, y2),
+                    stroke=svgwrite.rgb(10, 10, 16, "%"),
+                    stroke_width="1",
+                    marker_end="url(#arrowhead)"
+                    )
+            )
     dwg.save()
     print(f"Image {name} written.")
 
 
 if __name__ == "__main__":
     # print("IR Draw utility renders Cloud Sisal IR's presented in JSON")
-    area = dict(width=2000, height=2000)
+
+
     import sys
 
     input_file_name = sys.argv[1]
@@ -247,8 +256,8 @@ if __name__ == "__main__":
     # print(f"Reading IR file {input_file_name}.")
     with open(input_file_name, "r") as file_:
         data = python_names(json.load(file_))
-
     functions = [Node(func) for func in data["functions"]]
     file_name = "../" + input_file_name.rsplit(".")[0] + ".svg"
     # print(f"Drawing.")
+    area = dict(width=150 * len(Node.node_index), height=100* len(Node.node_index))
     ir_render_to_svg(functions, area, file_name)

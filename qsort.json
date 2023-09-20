@@ -1,0 +1,2170 @@
+{
+ "functions": [
+  {
+   "id": "node36",
+   "location": "1:0-13:12",
+   "pragmas": [],
+   "functionName": "sort",
+   "name": "Lambda",
+   "inPorts": [
+    {
+     "nodeId": "node36",
+     "type": {
+      "location": "1:17-1:33",
+      "element": {
+       "location": "1:26-1:33",
+       "name": "integer"
+      },
+      "multiType": "array"
+     },
+     "index": 0,
+     "label": "A"
+    }
+   ],
+   "outPorts": [
+    {
+     "nodeId": "node36",
+     "type": {
+      "location": "1:42-1:58",
+      "element": {
+       "location": "1:51-1:58",
+       "name": "integer"
+      },
+      "multiType": "array"
+     },
+     "index": 0
+    }
+   ],
+   "nodes": [
+    {
+     "id": "node32",
+     "location": "2:2-12:8",
+     "condition": {
+      "id": "node33",
+      "location": "2:6-2:18",
+      "name": "Condition",
+      "inPorts": [
+       {
+        "nodeId": "node33",
+        "type": {
+         "location": "1:17-1:33",
+         "element": {
+          "location": "1:26-1:33",
+          "name": "integer"
+         },
+         "multiType": "array"
+        },
+        "index": 0,
+        "label": "A"
+       }
+      ],
+      "outPorts": [
+       {
+        "nodeId": "node33",
+        "type": {
+         "location": "not applicable",
+         "name": "boolean"
+        },
+        "index": 0,
+        "label": "cond #0"
+       }
+      ],
+      "nodes": [
+       {
+        "id": "node0",
+        "location": "2:6-2:13",
+        "callee": "size",
+        "name": "FunctionCall",
+        "inPorts": [
+         {
+          "nodeId": "node0",
+          "type": {
+           "location": "not applicable",
+           "element": {
+            "location": "not applicable",
+            "name": "any"
+           },
+           "multiType": "array"
+          },
+          "index": 0,
+          "label": "array",
+          "location": "2:11-2:12"
+         }
+        ],
+        "outPorts": [
+         {
+          "nodeId": "node0",
+          "type": {
+           "location": "not applicable",
+           "name": "integer"
+          },
+          "index": 0
+         }
+        ]
+       },
+       {
+        "id": "node2",
+        "location": "2:17-2:18",
+        "value": "1",
+        "name": "Literal",
+        "outPorts": [
+         {
+          "nodeId": "node2",
+          "type": {
+           "location": "2:17-2:18",
+           "name": "integer"
+          },
+          "index": 0
+         }
+        ]
+       },
+       {
+        "id": "node1",
+        "location": "2:14-2:16",
+        "operator": "<=",
+        "name": "Binary",
+        "inPorts": [
+         {
+          "nodeId": "node1",
+          "type": {
+           "location": "not applicable",
+           "name": "integer"
+          },
+          "index": 0,
+          "label": "left"
+         },
+         {
+          "nodeId": "node1",
+          "type": {
+           "location": "2:17-2:18",
+           "name": "integer"
+          },
+          "index": 1,
+          "label": "right"
+         }
+        ],
+        "outPorts": [
+         {
+          "nodeId": "node1",
+          "type": {
+           "location": "not applicable",
+           "name": "boolean"
+          },
+          "index": 0,
+          "label": "binary output (<=)"
+         }
+        ]
+       }
+      ],
+      "edges": [
+       {
+        "from": [
+         "node0",
+         0
+        ],
+        "to": [
+         "node1",
+         0
+        ]
+       },
+       {
+        "from": [
+         "node2",
+         0
+        ],
+        "to": [
+         "node1",
+         1
+        ]
+       },
+       {
+        "from": [
+         "node1",
+         0
+        ],
+        "to": [
+         "node33",
+         0
+        ]
+       },
+       {
+        "from": [
+         "node33",
+         0
+        ],
+        "to": [
+         "node0",
+         0
+        ]
+       }
+      ]
+     },
+     "branches": [
+      {
+       "id": "node34",
+       "location": "3:4-4:2",
+       "name": "Then",
+       "inPorts": [
+        {
+         "nodeId": "node34",
+         "type": {
+          "location": "1:17-1:33",
+          "element": {
+           "location": "1:26-1:33",
+           "name": "integer"
+          },
+          "multiType": "array"
+         },
+         "index": 0,
+         "label": "A"
+        }
+       ],
+       "outPorts": [
+        {
+         "nodeId": "node34",
+         "type": {
+          "location": "1:42-1:58",
+          "element": {
+           "location": "1:51-1:58",
+           "name": "integer"
+          },
+          "multiType": "array"
+         },
+         "index": 0
+        }
+       ],
+       "edges": [
+        {
+         "from": [
+          "node34",
+          0
+         ],
+         "to": [
+          "node34",
+          0
+         ]
+        }
+       ]
+      },
+      {
+       "id": "node35",
+       "location": "5:4-12:2",
+       "name": "Else",
+       "inPorts": [
+        {
+         "nodeId": "node35",
+         "type": {
+          "location": "1:17-1:33",
+          "element": {
+           "location": "1:26-1:33",
+           "name": "integer"
+          },
+          "multiType": "array"
+         },
+         "index": 0,
+         "label": "A"
+        }
+       ],
+       "outPorts": [
+        {
+         "nodeId": "node35",
+         "type": {
+          "location": "1:42-1:58",
+          "element": {
+           "location": "1:51-1:58",
+           "name": "integer"
+          },
+          "multiType": "array"
+         },
+         "index": 0
+        }
+       ],
+       "nodes": [
+        {
+         "id": "node31",
+         "location": "5:4-11:11",
+         "name": "Let",
+         "init": {
+          "id": "node39",
+          "location": "not applicable",
+          "name": "Init",
+          "edges": [
+           {
+            "from": [
+             "node10",
+             0
+            ],
+            "to": [
+             "node39",
+             0
+            ]
+           },
+           {
+            "from": [
+             "node39",
+             0
+            ],
+            "to": [
+             "node10",
+             0
+            ]
+           },
+           {
+            "from": [
+             "node18",
+             0
+            ],
+            "to": [
+             "node39",
+             1
+            ]
+           },
+           {
+            "from": [
+             "node39",
+             0
+            ],
+            "to": [
+             "node18",
+             0
+            ]
+           },
+           {
+            "from": [
+             "node26",
+             0
+            ],
+            "to": [
+             "node39",
+             2
+            ]
+           },
+           {
+            "from": [
+             "node39",
+             0
+            ],
+            "to": [
+             "node26",
+             0
+            ]
+           }
+          ],
+          "inPorts": [
+           {
+            "nodeId": "node39",
+            "type": {
+             "location": "1:17-1:33",
+             "element": {
+              "location": "1:26-1:33",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 0,
+            "label": "A"
+           }
+          ],
+          "outPorts": [
+           {
+            "nodeId": "node39",
+            "type": {
+             "location": "6:8-6:12",
+             "element": {
+              "location": "6:20-6:21",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 0,
+            "label": "Less"
+           },
+           {
+            "nodeId": "node39",
+            "type": {
+             "location": "7:8-7:12",
+             "element": {
+              "location": "7:20-7:21",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 1,
+            "label": "Same"
+           },
+           {
+            "nodeId": "node39",
+            "type": {
+             "location": "8:8-8:12",
+             "element": {
+              "location": "8:20-8:21",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 2,
+            "label": "More"
+           }
+          ],
+          "nodes": [
+           {
+            "id": "node10",
+            "location": "6:16-6:67",
+            "name": "LoopExpression",
+            "inPorts": [
+             {
+              "nodeId": "node10",
+              "type": {
+               "location": "1:17-1:33",
+               "element": {
+                "location": "1:26-1:33",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "A"
+             }
+            ],
+            "outPorts": [
+             {
+              "nodeId": "node10",
+              "type": {
+               "location": "6:8-6:12",
+               "element": {
+                "location": "6:20-6:21",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "reduction_0"
+             }
+            ],
+            "rangeGen": {
+             "id": "node4",
+             "location": "6:20-6:27",
+             "name": "RangeGen",
+             "outPorts": [
+              {
+               "nodeId": "node4",
+               "type": {
+                "location": "6:20-6:21",
+                "name": "integer"
+               },
+               "index": 0,
+               "label": "a"
+              },
+              {
+               "nodeId": "node4",
+               "type": {
+                "location": "not applicable",
+                "name": "integer"
+               },
+               "index": 1,
+               "label": "a_index"
+              }
+             ],
+             "inPorts": [
+              {
+               "nodeId": "node4",
+               "type": {
+                "location": "1:17-1:33",
+                "element": {
+                 "location": "6:20-6:21",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 0,
+               "label": "A"
+              }
+             ],
+             "nodes": [
+              {
+               "id": "node3",
+               "location": "6:20-6:27",
+               "name": "Scatter",
+               "inPorts": [
+                {
+                 "nodeId": "node3",
+                 "type": {
+                  "location": "1:17-1:33",
+                  "element": {
+                   "location": "6:20-6:21",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "input"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node3",
+                 "type": {
+                  "location": "6:20-6:21",
+                  "name": "integer"
+                 },
+                 "index": 0,
+                 "label": "element"
+                },
+                {
+                 "nodeId": "node3",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "index"
+                }
+               ]
+              }
+             ],
+             "edges": [
+              {
+               "from": [
+                "node4",
+                0
+               ],
+               "to": [
+                "node3",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node3",
+                0
+               ],
+               "to": [
+                "node4",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node3",
+                1
+               ],
+               "to": [
+                "node4",
+                1
+               ]
+              }
+             ]
+            },
+            "returns": {
+             "id": "node9",
+             "location": "6:27-6:60",
+             "name": "Returns",
+             "outPorts": [
+              {
+               "nodeId": "node9",
+               "type": {
+                "location": "not applicable",
+                "element": {
+                 "location": "6:20-6:21",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 0,
+               "label": "reduction_0"
+              }
+             ],
+             "inPorts": [
+              {
+               "nodeId": "node9",
+               "type": {
+                "location": "6:20-6:21",
+                "name": "integer"
+               },
+               "index": 0,
+               "label": "a"
+              },
+              {
+               "nodeId": "node9",
+               "type": {
+                "location": "not applicable",
+                "name": "integer"
+               },
+               "index": 1,
+               "label": "a_index"
+              },
+              {
+               "nodeId": "node9",
+               "type": {
+                "location": "1:17-1:33",
+                "element": {
+                 "location": "1:26-1:33",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 2,
+               "label": "A"
+              }
+             ],
+             "nodes": [
+              {
+               "id": "node8",
+               "location": "6:35-6:60",
+               "name": "Reduction",
+               "operator": "array",
+               "outPorts": [
+                {
+                 "nodeId": "node8",
+                 "type": {
+                  "location": "not applicable",
+                  "element": {
+                   "location": "6:20-6:21",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "reduction output"
+                }
+               ],
+               "inPorts": [
+                {
+                 "nodeId": "node8",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "boolean"
+                 },
+                 "index": 0,
+                 "label": "reduction cond input"
+                },
+                {
+                 "nodeId": "node8",
+                 "type": {
+                  "location": "6:20-6:21",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "reduction value input"
+                }
+               ]
+              },
+              {
+               "id": "node7",
+               "location": "6:55-6:59",
+               "name": "ArrayAccess",
+               "inPorts": [
+                {
+                 "nodeId": "node7",
+                 "type": {
+                  "location": "1:17-1:33",
+                  "element": {
+                   "location": "1:26-1:33",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "array"
+                },
+                {
+                 "nodeId": "node7",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "index"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node7",
+                 "type": {
+                  "location": "1:26-1:33",
+                  "name": "integer"
+                 },
+                 "index": 0
+                }
+               ]
+              },
+              {
+               "id": "node6",
+               "location": "6:57-6:58",
+               "value": "1",
+               "name": "Literal",
+               "outPorts": [
+                {
+                 "nodeId": "node6",
+                 "type": {
+                  "location": "6:57-6:58",
+                  "name": "integer"
+                 },
+                 "index": 0
+                }
+               ]
+              },
+              {
+               "id": "node5",
+               "location": "6:53-6:54",
+               "operator": "<",
+               "name": "Binary",
+               "inPorts": [
+                {
+                 "nodeId": "node5",
+                 "type": {
+                  "location": "6:20-6:21",
+                  "name": "integer"
+                 },
+                 "index": 0,
+                 "label": "left"
+                },
+                {
+                 "nodeId": "node5",
+                 "type": {
+                  "location": "1:26-1:33",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "right"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node5",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "boolean"
+                 },
+                 "index": 0,
+                 "label": "binary output (<)"
+                }
+               ]
+              }
+             ],
+             "edges": [
+              {
+               "from": [
+                "node9",
+                0
+               ],
+               "to": [
+                "node8",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node9",
+                0
+               ],
+               "to": [
+                "node5",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node7",
+                0
+               ],
+               "to": [
+                "node5",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node9",
+                2
+               ],
+               "to": [
+                "node7",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node6",
+                0
+               ],
+               "to": [
+                "node7",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node5",
+                0
+               ],
+               "to": [
+                "node8",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node8",
+                0
+               ],
+               "to": [
+                "node9",
+                0
+               ]
+              }
+             ]
+            },
+            "pragmas": []
+           },
+           {
+            "id": "node18",
+            "location": "7:16-7:67",
+            "name": "LoopExpression",
+            "inPorts": [
+             {
+              "nodeId": "node18",
+              "type": {
+               "location": "1:17-1:33",
+               "element": {
+                "location": "1:26-1:33",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "A"
+             }
+            ],
+            "outPorts": [
+             {
+              "nodeId": "node18",
+              "type": {
+               "location": "7:8-7:12",
+               "element": {
+                "location": "7:20-7:21",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "reduction_0"
+             }
+            ],
+            "rangeGen": {
+             "id": "node12",
+             "location": "7:20-7:27",
+             "name": "RangeGen",
+             "outPorts": [
+              {
+               "nodeId": "node12",
+               "type": {
+                "location": "7:20-7:21",
+                "name": "integer"
+               },
+               "index": 0,
+               "label": "a"
+              },
+              {
+               "nodeId": "node12",
+               "type": {
+                "location": "not applicable",
+                "name": "integer"
+               },
+               "index": 1,
+               "label": "a_index"
+              }
+             ],
+             "inPorts": [
+              {
+               "nodeId": "node12",
+               "type": {
+                "location": "1:17-1:33",
+                "element": {
+                 "location": "7:20-7:21",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 0,
+               "label": "A"
+              }
+             ],
+             "nodes": [
+              {
+               "id": "node11",
+               "location": "7:20-7:27",
+               "name": "Scatter",
+               "inPorts": [
+                {
+                 "nodeId": "node11",
+                 "type": {
+                  "location": "1:17-1:33",
+                  "element": {
+                   "location": "7:20-7:21",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "input"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node11",
+                 "type": {
+                  "location": "7:20-7:21",
+                  "name": "integer"
+                 },
+                 "index": 0,
+                 "label": "element"
+                },
+                {
+                 "nodeId": "node11",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "index"
+                }
+               ]
+              }
+             ],
+             "edges": [
+              {
+               "from": [
+                "node12",
+                0
+               ],
+               "to": [
+                "node11",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node11",
+                0
+               ],
+               "to": [
+                "node12",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node11",
+                1
+               ],
+               "to": [
+                "node12",
+                1
+               ]
+              }
+             ]
+            },
+            "returns": {
+             "id": "node17",
+             "location": "7:27-7:60",
+             "name": "Returns",
+             "outPorts": [
+              {
+               "nodeId": "node17",
+               "type": {
+                "location": "not applicable",
+                "element": {
+                 "location": "7:20-7:21",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 0,
+               "label": "reduction_0"
+              }
+             ],
+             "inPorts": [
+              {
+               "nodeId": "node17",
+               "type": {
+                "location": "7:20-7:21",
+                "name": "integer"
+               },
+               "index": 0,
+               "label": "a"
+              },
+              {
+               "nodeId": "node17",
+               "type": {
+                "location": "not applicable",
+                "name": "integer"
+               },
+               "index": 1,
+               "label": "a_index"
+              },
+              {
+               "nodeId": "node17",
+               "type": {
+                "location": "1:17-1:33",
+                "element": {
+                 "location": "1:26-1:33",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 2,
+               "label": "A"
+              }
+             ],
+             "nodes": [
+              {
+               "id": "node16",
+               "location": "7:35-7:60",
+               "name": "Reduction",
+               "operator": "array",
+               "outPorts": [
+                {
+                 "nodeId": "node16",
+                 "type": {
+                  "location": "not applicable",
+                  "element": {
+                   "location": "7:20-7:21",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "reduction output"
+                }
+               ],
+               "inPorts": [
+                {
+                 "nodeId": "node16",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "boolean"
+                 },
+                 "index": 0,
+                 "label": "reduction cond input"
+                },
+                {
+                 "nodeId": "node16",
+                 "type": {
+                  "location": "7:20-7:21",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "reduction value input"
+                }
+               ]
+              },
+              {
+               "id": "node15",
+               "location": "7:55-7:59",
+               "name": "ArrayAccess",
+               "inPorts": [
+                {
+                 "nodeId": "node15",
+                 "type": {
+                  "location": "1:17-1:33",
+                  "element": {
+                   "location": "1:26-1:33",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "array"
+                },
+                {
+                 "nodeId": "node15",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "index"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node15",
+                 "type": {
+                  "location": "1:26-1:33",
+                  "name": "integer"
+                 },
+                 "index": 0
+                }
+               ]
+              },
+              {
+               "id": "node14",
+               "location": "7:57-7:58",
+               "value": "1",
+               "name": "Literal",
+               "outPorts": [
+                {
+                 "nodeId": "node14",
+                 "type": {
+                  "location": "7:57-7:58",
+                  "name": "integer"
+                 },
+                 "index": 0
+                }
+               ]
+              },
+              {
+               "id": "node13",
+               "location": "7:53-7:54",
+               "operator": "=",
+               "name": "Binary",
+               "inPorts": [
+                {
+                 "nodeId": "node13",
+                 "type": {
+                  "location": "7:20-7:21",
+                  "name": "integer"
+                 },
+                 "index": 0,
+                 "label": "left"
+                },
+                {
+                 "nodeId": "node13",
+                 "type": {
+                  "location": "1:26-1:33",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "right"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node13",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "boolean"
+                 },
+                 "index": 0,
+                 "label": "binary output (=)"
+                }
+               ]
+              }
+             ],
+             "edges": [
+              {
+               "from": [
+                "node17",
+                0
+               ],
+               "to": [
+                "node16",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node17",
+                0
+               ],
+               "to": [
+                "node13",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node15",
+                0
+               ],
+               "to": [
+                "node13",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node17",
+                2
+               ],
+               "to": [
+                "node15",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node14",
+                0
+               ],
+               "to": [
+                "node15",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node13",
+                0
+               ],
+               "to": [
+                "node16",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node16",
+                0
+               ],
+               "to": [
+                "node17",
+                0
+               ]
+              }
+             ]
+            },
+            "pragmas": []
+           },
+           {
+            "id": "node26",
+            "location": "8:16-8:67",
+            "name": "LoopExpression",
+            "inPorts": [
+             {
+              "nodeId": "node26",
+              "type": {
+               "location": "1:17-1:33",
+               "element": {
+                "location": "1:26-1:33",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "A"
+             }
+            ],
+            "outPorts": [
+             {
+              "nodeId": "node26",
+              "type": {
+               "location": "8:8-8:12",
+               "element": {
+                "location": "8:20-8:21",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "reduction_0"
+             }
+            ],
+            "rangeGen": {
+             "id": "node20",
+             "location": "8:20-8:27",
+             "name": "RangeGen",
+             "outPorts": [
+              {
+               "nodeId": "node20",
+               "type": {
+                "location": "8:20-8:21",
+                "name": "integer"
+               },
+               "index": 0,
+               "label": "a"
+              },
+              {
+               "nodeId": "node20",
+               "type": {
+                "location": "not applicable",
+                "name": "integer"
+               },
+               "index": 1,
+               "label": "a_index"
+              }
+             ],
+             "inPorts": [
+              {
+               "nodeId": "node20",
+               "type": {
+                "location": "1:17-1:33",
+                "element": {
+                 "location": "8:20-8:21",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 0,
+               "label": "A"
+              }
+             ],
+             "nodes": [
+              {
+               "id": "node19",
+               "location": "8:20-8:27",
+               "name": "Scatter",
+               "inPorts": [
+                {
+                 "nodeId": "node19",
+                 "type": {
+                  "location": "1:17-1:33",
+                  "element": {
+                   "location": "8:20-8:21",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "input"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node19",
+                 "type": {
+                  "location": "8:20-8:21",
+                  "name": "integer"
+                 },
+                 "index": 0,
+                 "label": "element"
+                },
+                {
+                 "nodeId": "node19",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "index"
+                }
+               ]
+              }
+             ],
+             "edges": [
+              {
+               "from": [
+                "node20",
+                0
+               ],
+               "to": [
+                "node19",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node19",
+                0
+               ],
+               "to": [
+                "node20",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node19",
+                1
+               ],
+               "to": [
+                "node20",
+                1
+               ]
+              }
+             ]
+            },
+            "returns": {
+             "id": "node25",
+             "location": "8:27-8:60",
+             "name": "Returns",
+             "outPorts": [
+              {
+               "nodeId": "node25",
+               "type": {
+                "location": "not applicable",
+                "element": {
+                 "location": "8:20-8:21",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 0,
+               "label": "reduction_0"
+              }
+             ],
+             "inPorts": [
+              {
+               "nodeId": "node25",
+               "type": {
+                "location": "8:20-8:21",
+                "name": "integer"
+               },
+               "index": 0,
+               "label": "a"
+              },
+              {
+               "nodeId": "node25",
+               "type": {
+                "location": "not applicable",
+                "name": "integer"
+               },
+               "index": 1,
+               "label": "a_index"
+              },
+              {
+               "nodeId": "node25",
+               "type": {
+                "location": "1:17-1:33",
+                "element": {
+                 "location": "1:26-1:33",
+                 "name": "integer"
+                },
+                "multiType": "array"
+               },
+               "index": 2,
+               "label": "A"
+              }
+             ],
+             "nodes": [
+              {
+               "id": "node24",
+               "location": "8:35-8:60",
+               "name": "Reduction",
+               "operator": "array",
+               "outPorts": [
+                {
+                 "nodeId": "node24",
+                 "type": {
+                  "location": "not applicable",
+                  "element": {
+                   "location": "8:20-8:21",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "reduction output"
+                }
+               ],
+               "inPorts": [
+                {
+                 "nodeId": "node24",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "boolean"
+                 },
+                 "index": 0,
+                 "label": "reduction cond input"
+                },
+                {
+                 "nodeId": "node24",
+                 "type": {
+                  "location": "8:20-8:21",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "reduction value input"
+                }
+               ]
+              },
+              {
+               "id": "node23",
+               "location": "8:55-8:59",
+               "name": "ArrayAccess",
+               "inPorts": [
+                {
+                 "nodeId": "node23",
+                 "type": {
+                  "location": "1:17-1:33",
+                  "element": {
+                   "location": "1:26-1:33",
+                   "name": "integer"
+                  },
+                  "multiType": "array"
+                 },
+                 "index": 0,
+                 "label": "array"
+                },
+                {
+                 "nodeId": "node23",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "index"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node23",
+                 "type": {
+                  "location": "1:26-1:33",
+                  "name": "integer"
+                 },
+                 "index": 0
+                }
+               ]
+              },
+              {
+               "id": "node22",
+               "location": "8:57-8:58",
+               "value": "1",
+               "name": "Literal",
+               "outPorts": [
+                {
+                 "nodeId": "node22",
+                 "type": {
+                  "location": "8:57-8:58",
+                  "name": "integer"
+                 },
+                 "index": 0
+                }
+               ]
+              },
+              {
+               "id": "node21",
+               "location": "8:53-8:54",
+               "operator": ">",
+               "name": "Binary",
+               "inPorts": [
+                {
+                 "nodeId": "node21",
+                 "type": {
+                  "location": "8:20-8:21",
+                  "name": "integer"
+                 },
+                 "index": 0,
+                 "label": "left"
+                },
+                {
+                 "nodeId": "node21",
+                 "type": {
+                  "location": "1:26-1:33",
+                  "name": "integer"
+                 },
+                 "index": 1,
+                 "label": "right"
+                }
+               ],
+               "outPorts": [
+                {
+                 "nodeId": "node21",
+                 "type": {
+                  "location": "not applicable",
+                  "name": "boolean"
+                 },
+                 "index": 0,
+                 "label": "binary output (>)"
+                }
+               ]
+              }
+             ],
+             "edges": [
+              {
+               "from": [
+                "node25",
+                0
+               ],
+               "to": [
+                "node24",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node25",
+                0
+               ],
+               "to": [
+                "node21",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node23",
+                0
+               ],
+               "to": [
+                "node21",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node25",
+                2
+               ],
+               "to": [
+                "node23",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node22",
+                0
+               ],
+               "to": [
+                "node23",
+                1
+               ]
+              },
+              {
+               "from": [
+                "node21",
+                0
+               ],
+               "to": [
+                "node24",
+                0
+               ]
+              },
+              {
+               "from": [
+                "node24",
+                0
+               ],
+               "to": [
+                "node25",
+                0
+               ]
+              }
+             ]
+            },
+            "pragmas": []
+           }
+          ]
+         },
+         "body": {
+          "id": "node40",
+          "location": "not applicable",
+          "name": "Body",
+          "inPorts": [
+           {
+            "nodeId": "node40",
+            "type": {
+             "location": "6:8-6:12",
+             "element": {
+              "location": "6:20-6:21",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 0,
+            "label": "Less"
+           },
+           {
+            "nodeId": "node40",
+            "type": {
+             "location": "7:8-7:12",
+             "element": {
+              "location": "7:20-7:21",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 1,
+            "label": "Same"
+           },
+           {
+            "nodeId": "node40",
+            "type": {
+             "location": "8:8-8:12",
+             "element": {
+              "location": "8:20-8:21",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 2,
+            "label": "More"
+           },
+           {
+            "nodeId": "node40",
+            "type": {
+             "location": "1:17-1:33",
+             "element": {
+              "location": "1:26-1:33",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 3,
+            "label": "A"
+           }
+          ],
+          "outPorts": [
+           {
+            "nodeId": "node40",
+            "type": {
+             "location": "1:42-1:58",
+             "element": {
+              "location": "1:51-1:58",
+              "name": "integer"
+             },
+             "multiType": "array"
+            },
+            "index": 0
+           }
+          ],
+          "nodes": [
+           {
+            "id": "node27",
+            "location": "10:8-10:18",
+            "callee": "sort",
+            "name": "FunctionCall",
+            "inPorts": [
+             {
+              "nodeId": "node27",
+              "type": {
+               "location": "1:17-1:33",
+               "element": {
+                "location": "1:26-1:33",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "A",
+              "location": "10:13-10:17"
+             }
+            ],
+            "outPorts": [
+             {
+              "nodeId": "node27",
+              "type": {
+               "location": "1:42-1:58",
+               "element": {
+                "location": "1:51-1:58",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0
+             }
+            ]
+           },
+           {
+            "id": "node28",
+            "location": "10:19-10:21",
+            "operator": "||",
+            "name": "Binary",
+            "inPorts": [
+             {
+              "nodeId": "node28",
+              "type": {
+               "location": "1:42-1:58",
+               "element": {
+                "location": "1:51-1:58",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "left"
+             },
+             {
+              "nodeId": "node28",
+              "type": {
+               "location": "7:8-7:12",
+               "element": {
+                "location": "7:20-7:21",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 1,
+              "label": "right"
+             }
+            ],
+            "outPorts": [
+             {
+              "nodeId": "node28",
+              "type": {
+               "location": "10:19-10:21",
+               "element": {
+                "location": "1:51-1:58",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "binary output (||)"
+             }
+            ]
+           },
+           {
+            "id": "node30",
+            "location": "10:30-10:40",
+            "callee": "sort",
+            "name": "FunctionCall",
+            "inPorts": [
+             {
+              "nodeId": "node30",
+              "type": {
+               "location": "1:17-1:33",
+               "element": {
+                "location": "1:26-1:33",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "A",
+              "location": "10:35-10:39"
+             }
+            ],
+            "outPorts": [
+             {
+              "nodeId": "node30",
+              "type": {
+               "location": "1:42-1:58",
+               "element": {
+                "location": "1:51-1:58",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0
+             }
+            ]
+           },
+           {
+            "id": "node29",
+            "location": "10:27-10:29",
+            "operator": "||",
+            "name": "Binary",
+            "inPorts": [
+             {
+              "nodeId": "node29",
+              "type": {
+               "location": "10:19-10:21",
+               "element": {
+                "location": "1:51-1:58",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "left"
+             },
+             {
+              "nodeId": "node29",
+              "type": {
+               "location": "1:42-1:58",
+               "element": {
+                "location": "1:51-1:58",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 1,
+              "label": "right"
+             }
+            ],
+            "outPorts": [
+             {
+              "nodeId": "node29",
+              "type": {
+               "location": "10:27-10:29",
+               "element": {
+                "location": "1:51-1:58",
+                "name": "integer"
+               },
+               "multiType": "array"
+              },
+              "index": 0,
+              "label": "binary output (||)"
+             }
+            ]
+           }
+          ],
+          "edges": [
+           {
+            "from": [
+             "node27",
+             0
+            ],
+            "to": [
+             "node28",
+             0
+            ]
+           },
+           {
+            "from": [
+             "node40",
+             1
+            ],
+            "to": [
+             "node28",
+             1
+            ]
+           },
+           {
+            "from": [
+             "node28",
+             0
+            ],
+            "to": [
+             "node29",
+             0
+            ]
+           },
+           {
+            "from": [
+             "node30",
+             0
+            ],
+            "to": [
+             "node29",
+             1
+            ]
+           },
+           {
+            "from": [
+             "node29",
+             0
+            ],
+            "to": [
+             "node40",
+             0
+            ]
+           },
+           {
+            "from": [
+             "node40",
+             0
+            ],
+            "to": [
+             "node27",
+             0
+            ]
+           },
+           {
+            "from": [
+             "node40",
+             2
+            ],
+            "to": [
+             "node30",
+             0
+            ]
+           }
+          ]
+         },
+         "pragmas": [],
+         "inPorts": [
+          {
+           "nodeId": "node31",
+           "type": {
+            "location": "1:17-1:33",
+            "element": {
+             "location": "1:26-1:33",
+             "name": "integer"
+            },
+            "multiType": "array"
+           },
+           "index": 0,
+           "label": "A"
+          }
+         ],
+         "outPorts": [
+          {
+           "nodeId": "node31",
+           "type": {
+            "location": "1:42-1:58",
+            "element": {
+             "location": "1:51-1:58",
+             "name": "integer"
+            },
+            "multiType": "array"
+           },
+           "index": 0
+          }
+         ]
+        }
+       ],
+       "edges": [
+        {
+         "from": [
+          "node31",
+          0
+         ],
+         "to": [
+          "node35",
+          0
+         ]
+        },
+        {
+         "from": [
+          "node35",
+          0
+         ],
+         "to": [
+          "node31",
+          0
+         ]
+        }
+       ]
+      }
+     ],
+     "name": "If",
+     "pragmas": [],
+     "inPorts": [
+      {
+       "nodeId": "node32",
+       "type": {
+        "location": "1:17-1:33",
+        "element": {
+         "location": "1:26-1:33",
+         "name": "integer"
+        },
+        "multiType": "array"
+       },
+       "index": 0,
+       "label": "A"
+      }
+     ],
+     "outPorts": [
+      {
+       "nodeId": "node32",
+       "type": {
+        "location": "1:42-1:58",
+        "element": {
+         "location": "1:51-1:58",
+         "name": "integer"
+        },
+        "multiType": "array"
+       },
+       "index": 0
+      }
+     ]
+    }
+   ],
+   "edges": [
+    {
+     "from": [
+      "node32",
+      0
+     ],
+     "to": [
+      "node36",
+      0
+     ]
+    },
+    {
+     "from": [
+      "node36",
+      0
+     ],
+     "to": [
+      "node32",
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "id": "node38",
+   "location": "15:0-17:12",
+   "pragmas": [],
+   "functionName": "main",
+   "name": "Lambda",
+   "inPorts": [
+    {
+     "nodeId": "node38",
+     "type": {
+      "location": "15:17-15:33",
+      "element": {
+       "location": "15:26-15:33",
+       "name": "integer"
+      },
+      "multiType": "array"
+     },
+     "index": 0,
+     "label": "A"
+    }
+   ],
+   "outPorts": [
+    {
+     "nodeId": "node38",
+     "type": {
+      "location": "15:42-15:58",
+      "element": {
+       "location": "15:51-15:58",
+       "name": "integer"
+      },
+      "multiType": "array"
+     },
+     "index": 0
+    }
+   ],
+   "nodes": [
+    {
+     "id": "node37",
+     "location": "16:3-16:10",
+     "callee": "sort",
+     "name": "FunctionCall",
+     "pragmas": [],
+     "inPorts": [
+      {
+       "nodeId": "node37",
+       "type": {
+        "location": "1:17-1:33",
+        "element": {
+         "location": "1:26-1:33",
+         "name": "integer"
+        },
+        "multiType": "array"
+       },
+       "index": 0,
+       "label": "A",
+       "location": "16:8-16:9"
+      }
+     ],
+     "outPorts": [
+      {
+       "nodeId": "node37",
+       "type": {
+        "location": "1:42-1:58",
+        "element": {
+         "location": "1:51-1:58",
+         "name": "integer"
+        },
+        "multiType": "array"
+       },
+       "index": 0
+      }
+     ]
+    }
+   ],
+   "edges": [
+    {
+     "from": [
+      "node37",
+      0
+     ],
+     "to": [
+      "node38",
+      0
+     ]
+    },
+    {
+     "from": [
+      "node38",
+      0
+     ],
+     "to": [
+      "node37",
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "errors": []
+}
